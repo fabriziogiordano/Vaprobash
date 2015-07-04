@@ -87,10 +87,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Use NFS for the shared folder
     # http://askubuntu.com/questions/412525/vagrant-up-and-annoying-nfs-password-asking
-    config.vm.synced_folder ".", "/vagrant",
-              id: "core",
-              :nfs => true,
-              :mount_options => ['nolock,vers=3,udp,noatime']
+    ##config.vm.synced_folder ".", "/vagrant",
+    ##          id: "core",
+    ##          :nfs => true,
+    ##          :mount_options => ['nolock,vers=3,udp,noatime']
 
 
     # If using VirtualBox
@@ -123,12 +123,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 #    if Vagrant.has_plugin?("vagrant-cachier")
         # Configure cached packages to be shared between instances of the same base box.
         # Usage docs: http://fgrehm.viewdocs.io/vagrant-cachier/usage
-        config.cache.scope = :box
 
-        config.cache.synced_folder_opts = {
-            type: :nfs,
-            mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
-        }
+        #config.cache.scope = :box
+
+        #config.cache.synced_folder_opts = {
+        #    type: :nfs,
+        #    mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
+        #}
 #    end
 
     # If using Vagrant-Exec
@@ -155,21 +156,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         config.exec.commands 'node'
         config.exec.commands 'npm'
         config.exec.commands 'php'
+
+        # brew install direnv
+        # echo PATH_add binstubs > .envrc
+        # direnv allow .
+        # vagrant exec --binstubs
 #    end
 
     # If using Vagrant-Triggers
     # https://github.com/emyl/vagrant-triggers
     # vagrant plugin install vagrant-triggers
-#    if Vagrant.has_plugin?("vagrant-triggers")
-        {
-          [:up, :resume] => "brew install direnv && echo PATH_add binstubs > .envrc && direnv allow . && vagrant exec --binstubs"
-        }.each do |command, trigger|
-          config.trigger.before command, :stdout => true do
-            info "Executing #{command} action on the VirtualBox tied VM..."
-            run  trigger
-          end
-        end
-#    end
+    # if Vagrant.has_plugin?("vagrant-triggers")
+    #     {
+    #       [:up, :resume] => "brew install direnv && echo PATH_add binstubs > .envrc && direnv allow . && vagrant exec --binstubs"
+    #     }.each do |command, trigger|
+    #       config.trigger.before command, :stdout => true do
+    #         info "Executing #{command} action on the VirtualBox tied VM..."
+    #         run  trigger
+    #       end
+    #     end
+    # end
 
     # Add a marker file to only provision once
     #config.vm.provision "shell", inline: $vagrant_provision_marker_start
