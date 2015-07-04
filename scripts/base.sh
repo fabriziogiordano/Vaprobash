@@ -11,7 +11,7 @@ echo "export LANG=C.UTF-8" >> /home/vagrant/.bashrc
 echo ">>> Installing Base Packages"
 
 if [[ -z $1 ]]; then
-    github_url="https://raw.githubusercontent.com/fideloper/Vaprobash/master"
+    github_url="https://raw.githubusercontent.com/fabriziogiordano/Vaprobash/master"
 else
     github_url="$1"
 fi
@@ -21,7 +21,13 @@ sudo apt-get update
 
 # Install base packages
 # -qq implies -y --force-yes
-sudo apt-get install -qq curl unzip git-core ack-grep software-properties-common build-essential
+sudo apt-get install -qq curl unzip git-core ack-grep software-properties-common build-essential bsdtar
+
+# Set basic bash
+curl --silent -L $github_url/helpers/.bashrc >> /home/vagrant/.bashrc
+curl --silent -L $github_url/helpers/.bash_aliases >> /home/vagrant/.bash_aliases
+sudo chown vagrant:vagrant /home/vagrant/.bashrc
+sudo chown vagrant:vagrant /home/vagrant/.bash_aliases
 
 # Git Config and set Owner
 curl --silent -L $github_url/helpers/gitconfig > /home/vagrant/.gitconfig

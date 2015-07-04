@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# # Add Node 0.12.x to apt.
+# curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
+# # Install Node
+# apt-get install -y nodejs
+# curl -sL https://raw.githubusercontent.com/glenpike/npm-g_nosudo/master/npm-g-no-sudo.sh | sudo bash -
+
 # Test if NodeJS is installed
 node -v > /dev/null 2>&1
 NODE_IS_INSTALLED=$?
@@ -23,7 +29,7 @@ elif [[ $NUMBER_OF_ARG -eq 2 ]]; then
 else
     # Default Nodejs version when nothing is given
     NODEJS_VERSION=latest
-    GITHUB_URL="https://raw.githubusercontent.com/fideloper/Vaprobash/master"
+    GITHUB_URL="https://raw.githubusercontent.com/fabriziogiordano/Vaprobash/master"
 fi
 
 # True, if Node is not installed
